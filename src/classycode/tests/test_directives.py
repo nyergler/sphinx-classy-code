@@ -42,9 +42,9 @@ Additional Text
 
         self.assertEqual(
             codeblock['highlight_args']['hl_lines'],
-            {0: 'one',
-             1: 'two-three',
+            {1: 'one',
              2: 'two-three',
+             3: 'two-three',
             },
         )
 
@@ -55,7 +55,7 @@ class LineClassParseTests(TestCase):
 
         self.assertEqual(
             directives.parselinenos('1(one)'),
-            {0: 'one'},
+            {1: 'one'},
         )
 
     def test_parse_range_entry(self):
@@ -63,8 +63,8 @@ class LineClassParseTests(TestCase):
         self.assertEqual(
             directives.parselinenos('1-2(one-two)'),
             {
-                0: 'one-two',
                 1: 'one-two',
+                2: 'one-two',
             },
         )
 
@@ -73,8 +73,8 @@ class LineClassParseTests(TestCase):
         self.assertEqual(
             directives.parselinenos('1(one),2-3(two-three)'),
             {
-                0: 'one',
-                1: 'two-three',
+                1: 'one',
                 2: 'two-three',
+                3: 'two-three',
             },
         )

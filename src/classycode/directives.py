@@ -17,10 +17,10 @@ def parselinenos(spec):
 
     for part in parts:
         line_class = LINECLASS_RE.match(part)
-        start = int(line_class.group('start')) - 1
+        start = int(line_class.group('start'))
 
         if line_class.group('end'):
-            for line_no in xrange(start, int(line_class.group('end'))):
+            for line_no in xrange(start, int(line_class.group('end')) + 1):
                 items[line_no] = line_class.group('class')
 
         else:
