@@ -1,2 +1,6 @@
+import classycode.directives
+
+
 def setup(app):
-    pass
+
+    app.add_directive('code-block', classycode.directives.CodeBlock)
