@@ -31,8 +31,5 @@ setup(name='sphinx-classy-code',
     package_dir = {'': 'src'},include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
-    entry_points={
-        'console_scripts':
-            ['sphinx-classy-code=sphinxclassycode:main']
-    }
+    test_suite='classycode.tests',
 )
