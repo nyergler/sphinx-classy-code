@@ -1,35 +1,13 @@
-=================================
- Getting Started with Hieroglyph
-=================================
+============
+Stay Classy!
+============
 
-This is the title slide
+.. code-block:: none
+   :line-classes: 1(one),2-3(two-three)
 
-.. contents::
-   :local:
+   1
+   2
+   3
+   4
 
-.. ifslides::
-
-   SLIDES
-
-   Slide 3
-   =======
-
-.. ifnotslides::
-
-   Heading 3
-   =========
-
-   OTHERBUILDERS
-
-   Hello, World
-
-Another Slide
-=============
-
-A Second slide
-
-.. toctree::
-
-   split_slides
-   split_slide_title_override
-   split_slides_increment
+Additional Text

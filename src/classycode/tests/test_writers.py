@@ -25,3 +25,19 @@ class MonkeyPatchTests(TestCase):
             sphinx.highlighting.PygmentsBridge.html_formatter,
             classycode.formatter.HtmlFormatter,
         )
+
+
+class SphinxOutputTests(TestCase):
+
+    @with_sphinx()
+    def test_output(self, sphinx_app):
+
+        sphinx_app.build()
+
+        with open(sphinx_app.builddir/'html'/'index.html') as html_file:
+            html = html_file.read()
+
+            self.assertIn('<span class="one">1\n</span>', html)
+            self.assertIn('<span class="two-three">2\n</span>', html)
+            self.assertIn('<span class="two-three">3\n</span>', html)
+            self.assertIn('</span>4\n</pre>', html)
