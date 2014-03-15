@@ -41,6 +41,16 @@ class CodeBlock(sphinx.directives.code.CodeBlock):
 
         result = super(CodeBlock, self).run()
 
+        if (self.options.get('emphasize-lines') and
+                result[0].get('highlight_args', {}).get('hl_lines')):
+
+            # convert emphasize-lines params to line-class dict
+            result[0]['highlight_args']['hl_lines'] = dict(
+                [(line, 'hll')
+                 for line in result[0]['highlight_args']['hl_lines']
+                 ]
+            )
+
         if self.options.get('line-classes'):
             result[0]['highlight_args'] = {
                 'hl_lines': parselinenos(

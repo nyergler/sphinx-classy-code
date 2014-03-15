@@ -16,8 +16,10 @@ class CodeBlockTests(TestCase):
     def setUp(self):
 
         self.app = TestApp(buildername='html')
-        self.builder = StandaloneHTMLBuilder(self.app)
-        self.document = make_document(
+
+    def test_codeblock_processes_line_classes(self):
+
+        document = make_document(
             'testing',
             """\
 Title
@@ -34,17 +36,41 @@ Additional Text
 
 """,
         )
-        self.builder.init_templates()
-
-    def test_codeblock_accepts_line_classes(self):
-
-        codeblock = self.document.traverse(nodes.literal_block)[0]
+        codeblock = document.traverse(nodes.literal_block)[0]
 
         self.assertEqual(
             codeblock['highlight_args']['hl_lines'],
             {1: 'one',
              2: 'two-three',
              3: 'two-three',
+            },
+        )
+
+    def test_codeblock_supports_emphasize_lines_functionality(self):
+
+        document = make_document(
+            'testing',
+            """\
+Title
+-----
+
+.. code-block:: none
+   :emphasize-lines: 1-2
+
+   1
+   2
+   3
+
+Additional Text
+
+""",
+        )
+        codeblock = document.traverse(nodes.literal_block)[0]
+
+        self.assertEqual(
+            codeblock['highlight_args']['hl_lines'],
+            {1: 'hll',
+             2: 'hll',
             },
         )
 
