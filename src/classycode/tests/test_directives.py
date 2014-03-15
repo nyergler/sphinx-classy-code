@@ -74,6 +74,35 @@ Additional Text
             },
         )
 
+    def test_mix_emphasize_lines_and_classes(self):
+
+        document = make_document(
+            'testing',
+            """\
+Title
+-----
+
+.. code-block:: none
+   :emphasize-lines: 1
+   :line-classes: 2(two)
+
+   1
+   2
+   3
+
+Additional Text
+
+""",
+        )
+        codeblock = document.traverse(nodes.literal_block)[0]
+
+        self.assertEqual(
+            codeblock['highlight_args']['hl_lines'],
+            {1: 'hll',
+             2: 'two',
+            },
+        )
+
 
 class LineClassParseTests(TestCase):
 
