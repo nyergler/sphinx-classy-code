@@ -20,7 +20,7 @@ def parselinenos(spec):
         start = int(line_class.group('start'))
 
         if line_class.group('end'):
-            for line_no in xrange(start, int(line_class.group('end')) + 1):
+            for line_no in range(start, int(line_class.group('end')) + 1):
                 items[line_no] = line_class.group('class')
 
         else:
