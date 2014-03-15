@@ -2,6 +2,13 @@
 Sphinx Classy Code
 ==================
 
+.. image:: https://travis-ci.org/nyergler/sphinx-classy-code.png?branch=master
+   :target: https://travis-ci.org/nyergler/sphinx-classy-code
+
+.. image:: https://coveralls.io/repos/nyergler/sphinx-classy-code/badge.png
+  :target: https://coveralls.io/r/nyergler/sphinx-classy-code
+
+
 Drop-in replacements for Sphinx_\ ' code example directives. In
 addition to specifying `emphasize-lines`_, you can specify arbitrary
 classes to add on a per-line basis.
