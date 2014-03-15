@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.3"
+
+env:
+  - SPHINX_VERSION=1.1.3
+  - SPHINX_VERSION=1.2.2
+  - SPHINX_VERSION=dev
+
+install:
+  - pip install coveralls
+  - pip install -q Sphinx==$SPHINX_VERSION --allow-external Sphinx --allow-unverified Sphinx
+  - python setup.py install
+
+script:
+  - coverage run --source=classycode setup.py test
+
+after_success:
+  - coveralls
