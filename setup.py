@@ -10,7 +10,6 @@ version = '0.1'
 
 install_requires = [
     'Sphinx',
-    'six',
 ]
 
 
@@ -36,4 +35,8 @@ setup(name='sphinx-classy-code',
     zip_safe=False,
     install_requires=install_requires,
     test_suite='classycode.tests',
+    tests_require=[
+        'six',
+        'mock',
+    ],
 )
