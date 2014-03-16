@@ -275,7 +275,7 @@ def remove_unicode_literals(s):
     return _unicode_literals_re.sub(lambda x: x.group(1) or x.group(2), s)
 
 
-def make_document(source_name, contents):
+def make_document(source_name, contents, **kwargs):
     """Parse ```contents``` into a docutils document."""
 
     parser = docutils.parsers.rst.Parser()
@@ -288,6 +288,8 @@ def make_document(source_name, contents):
             ),
         ).get_default_values(),
     )
+    for name in kwargs:
+        setattr(document.settings, name, kwargs[name])
 
     parser.parse(contents, document)
 
