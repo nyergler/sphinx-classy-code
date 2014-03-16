@@ -29,7 +29,8 @@ def parselinenos(spec):
     return items
 
 
-class CodeBlock(sphinx.directives.code.CodeBlock):
+class LineClassesSupportMixin(object):
+    """Mixin class that adds the line-classes to Sphinx code directives."""
 
     option_spec = {
         'linenos': directives.flag,
@@ -39,7 +40,7 @@ class CodeBlock(sphinx.directives.code.CodeBlock):
 
     def run(self):
 
-        result = super(CodeBlock, self).run()
+        result = super(LineClassesSupportMixin, self).run()
         hl_lines = result[0].get('highlight_args', {}).get('hl_lines', {})
 
         if self.options.get('emphasize-lines') and hl_lines:
@@ -64,37 +65,14 @@ class CodeBlock(sphinx.directives.code.CodeBlock):
         return result
 
 
-class LiteralInclude(sphinx.directives.code.LiteralInclude):
+class CodeBlock(LineClassesSupportMixin, sphinx.directives.code.CodeBlock):
+    """CodeBlock directive with support for custom classes applied to lines.
 
-    option_spec = {
-        'linenos': directives.flag,
-        'emphasize-lines': directives.unchanged_required,
-        'line-classes': directives.unchanged_required,
-    }
+    """
 
-    def run(self):
 
-        result = super(LiteralInclude, self).run()
+class LiteralInclude(LineClassesSupportMixin,
+                     sphinx.directives.code.LiteralInclude):
+    """LiteralInclude directive with support for custom classes on lines.
 
-        hl_lines = result[0].get('highlight_args', {}).get('hl_lines', {})
-
-        if self.options.get('emphasize-lines') and hl_lines:
-
-            # convert emphasize-lines params to line-class dict
-            hl_lines = dict(
-                [
-                    (line, 'hll')
-                    for line in result[0]['highlight_args']['hl_lines']
-                 ]
-            )
-
-        if self.options.get('line-classes'):
-            hl_lines.update(
-                parselinenos(
-                    self.options['line-classes'],
-                ),
-            )
-
-        result[0].setdefault('highlight_args', {})['hl_lines'] = hl_lines
-
-        return result
+    """
