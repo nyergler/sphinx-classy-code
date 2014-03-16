@@ -4,6 +4,8 @@ News
 0.1
 ---
 
-*Release date: UNRELEASED*
+*Release date: 16 March 2014*
 
 * ``code-block`` supports ``line-classes`` option.
+* ``literalinclude`` supports ``line-classes`` option.
+* ``line-classes`` and ``emphasize-lines`` work together correctly.
