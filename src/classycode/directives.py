@@ -62,3 +62,39 @@ class CodeBlock(sphinx.directives.code.CodeBlock):
         result[0].setdefault('highlight_args', {})['hl_lines'] = hl_lines
 
         return result
+
+
+class LiteralInclude(sphinx.directives.code.LiteralInclude):
+
+    option_spec = {
+        'linenos': directives.flag,
+        'emphasize-lines': directives.unchanged_required,
+        'line-classes': directives.unchanged_required,
+    }
+
+    def run(self):
+
+        result = super(LiteralInclude, self).run()
+
+        hl_lines = result[0].get('highlight_args', {}).get('hl_lines', {})
+
+        if self.options.get('emphasize-lines') and hl_lines:
+
+            # convert emphasize-lines params to line-class dict
+            hl_lines = dict(
+                [
+                    (line, 'hll')
+                    for line in result[0]['highlight_args']['hl_lines']
+                 ]
+            )
+
+        if self.options.get('line-classes'):
+            hl_lines.update(
+                parselinenos(
+                    self.options['line-classes'],
+                ),
+            )
+
+        result[0].setdefault('highlight_args', {})['hl_lines'] = hl_lines
+
+        return result
