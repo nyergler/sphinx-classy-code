@@ -76,3 +76,18 @@ class LiteralInclude(LineClassesSupportMixin,
     """LiteralInclude directive with support for custom classes on lines.
 
     """
+
+    option_spec = {
+        'linenos': directives.flag,
+        'tab-width': int,
+        'language': directives.unchanged_required,
+        'encoding': directives.encoding,
+        'pyobject': directives.unchanged_required,
+        'lines': directives.unchanged_required,
+        'start-after': directives.unchanged_required,
+        'end-before': directives.unchanged_required,
+        'prepend': directives.unchanged_required,
+        'append': directives.unchanged_required,
+        'emphasize-lines': directives.unchanged_required,
+        'line-classes': directives.unchanged_required,
+    }
