@@ -17,3 +17,5 @@ _build
 /include/
 /.Python
 /.tox/
+.coverage
+/htmlcov/
