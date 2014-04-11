@@ -4,10 +4,10 @@ from docutils.parsers.rst import directives
 import sphinx.directives.code
 
 
-LINECLASS_RE = re.compile(r'((?P<start>\d+)(-(?P<end>\d+))?)\((?P<class>[a-z0-9-]+)\)')
+LINECLASS_RE = re.compile(r'((?P<start>\d+)(?P<range>-(?P<end>\d+)?)?)\((?P<class>[a-z0-9-]+)\)')
 
 
-def parselinenos(spec):
+def parselinenos(spec, nlines=None):
     """Parse a line class spec into a dict of line no: class name
 
     """
@@ -19,8 +19,13 @@ def parselinenos(spec):
         line_class = LINECLASS_RE.match(part)
         start = int(line_class.group('start'))
 
-        if line_class.group('end'):
-            for line_no in range(start, int(line_class.group('end')) + 1):
+        if line_class.group('range'):
+            if line_class.group('end'):
+                end = int(line_class.group('end'))
+            else:
+                end = nlines
+
+            for line_no in range(start, end + 1):
                 items[line_no] = line_class.group('class')
 
         else:
@@ -37,6 +42,11 @@ class LineClassesSupportMixin(object):
         'emphasize-lines': directives.unchanged_required,
         'line-classes': directives.unchanged_required,
     }
+
+    def _get_line_count(self):
+        """Return the line count for this directive's content."""
+
+        return len(self.content)
 
     def run(self):
 
@@ -56,6 +66,7 @@ class LineClassesSupportMixin(object):
         if self.options.get('line-classes'):
             line_classes = parselinenos(
                 self.options['line-classes'],
+                nlines=self._get_line_count(),
             )
             for line in line_classes:
                 if line in hl_lines:

@@ -8,6 +8,8 @@ News
 
 * ``line-classes`` and ``emphasize-lines`` work correctly when applied
   to the same line.
+* Support adding a class to all lines starting with ``n`` in
+  ``code-block`` directives.
 
 0.1
 ---

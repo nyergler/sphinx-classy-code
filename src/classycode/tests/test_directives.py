@@ -135,6 +135,65 @@ Additional Text
             },
         )
 
+    def test_emphasize_lines_and_classes_same_line(self):
+
+        document = make_document(
+            'testing',
+            """\
+Title
+-----
+
+.. code-block:: none
+   :emphasize-lines: 2
+   :line-classes: 2(two)
+
+   1
+   2
+   3
+
+Additional Text
+
+""",
+        )
+
+        codeblock = document.traverse(nodes.literal_block)[0]
+
+        self.assertEqual(
+            codeblock['highlight_args']['hl_lines'],
+            {2: 'hll two',
+            },
+        )
+
+    def test_highlight_to_end(self):
+
+        document = make_document(
+            'testing',
+            """\
+Title
+-----
+
+.. code-block:: none
+   :line-classes: 2-(two)
+
+   1
+   2
+   3
+
+Additional Text
+
+""",
+        )
+
+        codeblock = document.traverse(nodes.literal_block)[0]
+
+        self.assertEqual(
+            codeblock['highlight_args']['hl_lines'],
+            {2: 'two',
+             3: 'two',
+            },
+        )
+
+
 class LiteralIncludeTests(TestCase):
 
     def setUp(self):

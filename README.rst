@@ -28,7 +28,17 @@ class="python-def">...</span>``.
 Valid line + class specifiers include:
 
 * ``1(classname)``
+
+  Apply ``classname`` to line 1.
+
 * ``1-5(classname)``
+
+  Apply ``classname`` to lines 1 through 5.
+
+* ``2-(classname)``
+
+  Apply ``classname`` to line 2 *and all subsequent lines*
+  (``codeblock`` only).
 
 You can separate multiple specifiers with a comma.
 
