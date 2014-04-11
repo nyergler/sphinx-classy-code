@@ -54,11 +54,14 @@ class LineClassesSupportMixin(object):
             )
 
         if self.options.get('line-classes'):
-            hl_lines.update(
-                parselinenos(
-                    self.options['line-classes'],
-                ),
+            line_classes = parselinenos(
+                self.options['line-classes'],
             )
+            for line in line_classes:
+                if line in hl_lines:
+                    hl_lines[line] = '%s %s' % (hl_lines[line], line_classes[line])
+                else:
+                    hl_lines[line] = line_classes[line]
 
         result[0].setdefault('highlight_args', {})['hl_lines'] = hl_lines
 

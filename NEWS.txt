@@ -1,6 +1,14 @@
 News
 ====
 
+0.2
+---
+
+*Release date: UNRELEASED*
+
+* ``line-classes`` and ``emphasize-lines`` work correctly when applied
+  to the same line.
+
 0.1
 ---
 

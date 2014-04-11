@@ -223,3 +223,30 @@ Additional Text
              2: 'two',
             },
         )
+
+    def test_emphasize_lines_and_classes_same_line(self):
+
+        with patch.object(self.app.env, 'note_dependency'):
+            document = make_document(
+                'testing',
+                """\
+Title
+-----
+
+.. literalinclude:: /test.py
+   :emphasize-lines: 2
+   :line-classes: 2(two)
+
+Additional Text
+
+""",
+                env=self.app.env,
+            )
+
+        codeblock = document.traverse(nodes.literal_block)[0]
+
+        self.assertEqual(
+            codeblock['highlight_args']['hl_lines'],
+            {2: 'hll two',
+            },
+        )
