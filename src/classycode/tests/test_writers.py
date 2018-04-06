@@ -1,11 +1,12 @@
+import tempfile
 from unittest import TestCase
 
 from sphinx.builders.html import StandaloneHTMLBuilder
+from sphinx_testing import with_app
 
 from classycode.tests.util import (
-    make_document,
-    with_sphinx,
     TestApp,
+    test_root,
 )
 
 import classycode.formatter
@@ -13,10 +14,14 @@ import classycode.formatter
 
 class MonkeyPatchTests(TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
+        cls.app = TestApp(buildername='html')
+        cls.builder = StandaloneHTMLBuilder(cls.app)
 
-        self.app = TestApp(buildername='html')
-        self.builder = StandaloneHTMLBuilder(self.app)
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.cleanup()
 
     def test_our_formatter_used(self):
         import sphinx.highlighting
@@ -29,8 +34,8 @@ class MonkeyPatchTests(TestCase):
 
 class SphinxOutputTests(TestCase):
 
-    @with_sphinx()
-    def test_output(self, sphinx_app):
+    @with_app(srcdir=test_root)
+    def test_output(self, sphinx_app, *args):
 
         sphinx_app.build()
 

@@ -38,5 +38,6 @@ setup(name='sphinx-classy-code',
     tests_require=[
         'six',
         'mock',
+        'sphinx-testing',
     ],
 )

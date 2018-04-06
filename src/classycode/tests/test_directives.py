@@ -45,8 +45,8 @@ class ParseLineNosTests(TestCase):
 
 class CodeBlockTests(TestCase):
 
-    def setUp(self):
-
+    @classmethod
+    def setUpClass(self):
         self.app = TestApp(buildername='html')
 
     def test_codeblock_processes_line_classes(self):

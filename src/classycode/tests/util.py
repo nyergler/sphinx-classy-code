@@ -208,6 +208,8 @@ def with_sphinx(*args, **kwargs):
     properly.
     """
 
+    app = TestApp(*args, **kwargs)
+
     def generator(target):
 
         if isinstance(target, type):
@@ -220,7 +222,6 @@ def with_sphinx(*args, **kwargs):
 
         @wraps(target)
         def deco(*args2, **kwargs2):
-            app = TestApp(*args, **kwargs)
             try:
                 target(*args2, sphinx_app=app, **kwargs2)
             finally:

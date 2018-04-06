@@ -17,6 +17,9 @@ def parselinenos(spec, nlines=None):
 
     for part in parts:
         line_class = LINECLASS_RE.match(part)
+        if line_class is None:
+            continue
+
         start = int(line_class.group('start'))
 
         if line_class.group('range'):
